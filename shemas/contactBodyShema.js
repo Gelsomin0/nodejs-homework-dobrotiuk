@@ -1,15 +1,14 @@
 const Joi = require('joi');
+const messagesError = {
+  "any.required": "missing required (#label) field.",
+  "string.pattern.base": "Field (#phone) must have format like this (XXX)-XXX-XXXX.",
+  "string.email": "Field (#email) must be a valid email address."
+}
 
 const bodyContactSchema = Joi.object({
-  name: Joi.string().min(3).max(50).required().messages({
-    "any.required": "missing required name field"
-  }),
-  email: Joi.string().min(5).max(255).required().email().messages({
-    "any.required": "missing required email field"
-  }),
-  phone: Joi.string().regex(/^[0-9\-\+]{9,15}$/).required().messages({
-    "any.required": "missing required phone field",
-  }),
-});
+  name: Joi.string().min(3).max(50).required(),
+  email: Joi.string().min(5).max(255).required().email(),
+  phone: Joi.string().pattern(/^\(\d{3}\) \d{3}-\d{4}$/).required(),
+}).messages(messagesError);
 
 module.exports = bodyContactSchema;
