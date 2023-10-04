@@ -2,7 +2,7 @@ const Joi = require('joi');
 const messagesError = {
   "any.required": "missing required (#label) field.",
   "string.pattern.base": "Field (#phone) must have format like this (XXX) XXX-XXXX.",
-  "string.email": "Field (#email) must be a valid email address."
+  "string.email": "Field (#email) must be a valid email address.",
 }
 
 const bodyContactSchema = Joi.object({
@@ -11,4 +11,11 @@ const bodyContactSchema = Joi.object({
   phone: Joi.string().pattern(/^\(\d{3}\) \d{3}-\d{4}$/).required(),
 }).messages(messagesError);
 
-module.exports = bodyContactSchema;
+const contactFavoriteSchema = Joi.object({
+  favorite: Joi.boolean().required(),
+}).messages({ "any.required": "missing field favorite." });
+
+module.exports = {
+  bodyContactSchema,
+  contactFavoriteSchema,
+}
