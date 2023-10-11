@@ -11,4 +11,11 @@ const bodyContactSchema = Joi.object({
   phone: Joi.string().pattern(/^\(\d{3}\) \d{3}-\d{4}$/).required(),
 }).messages(messagesError);
 
-module.exports = bodyContactSchema;
+const contactFavoriteSchema = Joi.object({
+  favorite: Joi.boolean().required(),
+}).messages({ "any.required": "missing field favorite." });
+
+module.exports = {
+  bodyContactSchema,
+  contactFavoriteSchema,
+}
