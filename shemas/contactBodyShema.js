@@ -1,8 +1,8 @@
 const Joi = require('joi');
 const messagesError = {
   "any.required": "missing required (#label) field.",
-  "string.pattern.base": "Field (#phone) must have format like this (XXX) XXX-XXXX.",
-  "string.email": "Field (#email) must be a valid email address.",
+  "string.pattern.base": "Field (#phone) must have format like this (XXX)-XXX-XXXX.",
+  "string.email": "Field (#email) must be a valid email address."
 }
 
 const bodyContactSchema = Joi.object({
