@@ -2,13 +2,16 @@ const express = require('express');
 const ctrlFunc = require('../../controllers/contacts');
 const isEmptyBody = require('../../middlewares/isEmptyBody');
 const { bodyContactSchema, contactFavoriteSchema } = require('../../shemas/contactBodyShema');
-const contactBodyValidate = require('../../decorators/contactBodyValidate');
+const validateBody = require('../../decorators/validateBody');
 const isValidId = require('../../middlewares/isValidId');
+const authenticate = require('../../middlewares/authenticate');
 
-const contactBodyValidateSchema = contactBodyValidate(bodyContactSchema);
-const contactFavoriteSchemaDecor = contactBodyValidate(contactFavoriteSchema);
+const contactBodyValidateSchema = validateBody(bodyContactSchema);
+const contactFavoriteSchemaDecor = validateBody(contactFavoriteSchema);
 
 const router = express.Router();
+
+router.use(authenticate);
 
 router.get('/', ctrlFunc.getAll);
 
