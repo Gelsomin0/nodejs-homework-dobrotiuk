@@ -14,13 +14,21 @@ const userSchema = new Schema({
         type: String,
         match: emailRegex,
         unique: true,
-        required: true,
+        required: [true, 'Email is required'],
     },
     password: {
         type: String,
         minlength: 6,
-        required: true,
-    }
+        required: [true, 'Set password for user'],
+    },
+    token: {
+        type: String,
+    },
+    subscription: {
+        type: String,
+        enum: ["starter", "pro", "business"],
+        default: "starter"
+    },
 }, { versionKey: false, timestamps: true });
 
 userSchema.post('save', handleSaveError);
