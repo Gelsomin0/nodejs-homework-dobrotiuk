@@ -14,12 +14,13 @@ const authenticate = async(req, res, next)=> {
     }
 
     try {
-        const { id } = jwt.verify(token, JWT_SECRET);
-        const user = await User.findById(id);
-
-        if(!user || !user.token) {
+        const verifyedToken = jwt.verify(token, JWT_SECRET);
+        const user = await User.findById(verifyedToken.id);
+        if(!user) {
             throw HttpError(401);
         }
+
+        req.user = user;
 
         next();
     } catch(error) {

@@ -4,8 +4,6 @@ const { User } = require('../models/Users');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-require('dotenv').config();
-
 const { JWT_SECRET } = process.env; 
 
 const signup = async (req, res) => {
@@ -40,13 +38,27 @@ const login = async (req, res) => {
     }
 
     const payload = { id: user._id };
-
+    
     const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '23h' });
+    await User.findByIdAndUpdate(user.id, { token });
 
     res.json({ username: user.username, email, token });
+}
+
+const currentUser = async (req, res) => {
+    const { username, email } = req.user;
+
+    res.json({ username, email });
+}
+
+const logout = async (req, res) => {
+    const { _id } = req.user;
+    await User.findByIdAndUpdate(_id, { token: '' });
 }
 
 module.exports = {
     signup: ctrlWrapper(signup),
     login: ctrlWrapper(login),
+    currentUser: ctrlWrapper(currentUser),
+    logout: ctrlWrapper(logout),
 }
