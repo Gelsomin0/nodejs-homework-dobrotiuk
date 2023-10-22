@@ -20,12 +20,12 @@ const userSchema = new Schema({
     enum: ["starter", "pro", "business"],
     default: "starter"
   },
+  avatarURL: String,
   token: String
 }, { versionKey: false, timestamps: true });
 
 userSchema.post('save', handleSaveError);
 userSchema.pre('findOneAndUpdate', runValidatorsAtUpdate);
-// userSchema.pre('findOneAndUpdate', handleSaveError);
 
 const userSignupSchema = Joi.object({
     email: Joi.string().pattern(emailRegex).required(),
