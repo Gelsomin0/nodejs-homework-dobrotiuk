@@ -56,6 +56,6 @@ const User = model('user', userSchema);
 module.exports = {
     User,
     userSignupSchema,
-  userLoginSchema,
+    userLoginSchema,
     userEmailSchema,
 };
